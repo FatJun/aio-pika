@@ -1,10 +1,11 @@
-import aiormq.abc
 import asyncio
+from ssl import SSLContext
+from typing import Any, Optional, Tuple, Type, Union, TypeVar
+from weakref import WeakSet
+
+import aiormq.abc
 from aiormq.connection import parse_bool, parse_timeout
 from pamqp.common import FieldTable
-from ssl import SSLContext
-from typing import Any, Optional, Tuple, Type, Union
-from weakref import WeakSet
 from yarl import URL
 
 from .abc import (
