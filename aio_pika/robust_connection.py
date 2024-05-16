@@ -1,11 +1,10 @@
+import aiormq.abc
 import asyncio
+from aiormq.connection import parse_bool, parse_timeout
+from pamqp.common import FieldTable
 from ssl import SSLContext
 from typing import Any, Optional, Tuple, Type, Union
 from weakref import WeakSet
-
-import aiormq.abc
-from aiormq.connection import parse_bool, parse_timeout
-from pamqp.common import FieldTable
 from yarl import URL
 
 from .abc import (
@@ -18,8 +17,8 @@ from .log import get_logger
 from .robust_channel import RobustChannel
 from .tools import CallbackCollection
 
-
 log = get_logger(__name__)
+T = TypeVar("T", bound=AbstractRobustConnection)
 
 
 class RobustConnection(Connection, AbstractRobustConnection):
@@ -236,10 +235,9 @@ async def connect_robust(
     ssl_context: Optional[SSLContext] = None,
     timeout: TimeoutType = None,
     client_properties: Optional[FieldTable] = None,
-    connection_class: Type[AbstractRobustConnection] = RobustConnection,
+    connection_class: Type[T] = RobustConnection,
     **kwargs: Any,
-) -> AbstractRobustConnection:
-
+) -> T:
     """Make connection to the broker.
 
     Example:
